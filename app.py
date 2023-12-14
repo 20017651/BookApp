@@ -216,10 +216,14 @@ def remove():
 
 @app.route("/filter/")
 def filter():
+    if request.args.get('id'):
+        query = request.args.get('id')
+        books = db.execute("SELECT * FROM books WHERE id = :query", query=query)
+
     if request.args.get('sale'):
         query = request.args.get('sale')
         books = db.execute("SELECT * FROM books WHERE onSale = :query", query=query)
-    
+        
     if request.args.get('kind'):
         query = request.args.get('kind')
         books = db.execute("SELECT * FROM books WHERE kind = :query", query=query)
